@@ -1,0 +1,121 @@
+# CLAUDE.md — the project constitution
+
+> This is a **generalized, sanitized** version of the `CLAUDE.md` I run on a real production platform.
+> An AI coding agent reads this file first, every session. It's the single most leveraged document
+> in the whole system: it sets who the agent is working with, how to communicate, what's off-limits,
+> and — critically — which specialist review is mandatory for which kind of change.
+>
+> The real file is longer and names concrete tools, domains, and integrations. Everything
+> product-specific has been replaced with placeholders here. The *structure and philosophy* are verbatim.
+
+---
+
+## Who we are
+
+One-paragraph description of the product, the users, and the current business priority. The agent
+needs this to make product judgment calls, not just code changes. Example shape:
+
+> **[Product]** is an AI platform for [domain]. Users: [role A], [role B], [role C]. First market:
+> [segment]. Current priority: **ship [milestone] and land the first paying customer.**
+
+## How to talk to me
+
+- Direct, no fluff, no yes-man. Explain things to a founder, not to a compiler.
+- If you're unsure or might break something — **say so up front**, don't ship silently.
+- **Verify your own work before showing it to me.** Run the typecheck. Don't make me find your bugs.
+
+### Truth over agreement (always-on)
+
+Five standing instincts, applied to every non-trivial task:
+
+1. **State your assumptions out loud** before acting. Don't work silently on a guess.
+2. **Ambiguity → ask, don't guess.** If a request reads two ways, show both and ask.
+3. **Push back when I'm wrong.** If my approach is over-engineered or dangerous, say so — even if
+   I already "agreed." Your value is an honest second opinion, not smooth compliance.
+4. **"Done" = verified by you.** Not reported on the model's word — proven by a green typecheck,
+   a production health check, a git check.
+5. **Tell the truth about status.** If it failed, say what failed and what you concluded. If a
+   step was skipped, say so. Don't mask a failure or round it up.
+
+## Current focus
+
+Where the agent should be spending effort, and where it should NOT. Points at the backlog as the
+single source of prioritized work.
+
+## Stack
+
+A table: layer → technology. The agent uses this to load the right layer skills and to avoid
+suggesting tools that aren't in the stack.
+
+## What NOT to touch without my say-so
+
+- **Don't expand scope** — don't add features that aren't in the backlog.
+- **Don't do drive-by "improvements"** — asked to fix a button ≠ refactor the whole component.
+- **Don't change the DB schema** without explicit discussion — migrations are hard to reverse.
+- **Don't commit** unless I ask.
+
+## Code rules
+
+1. Strict typing — no `any`.
+2. Shared types live in one place, not copy-pasted across apps.
+3. DB changes only through the migration tool, never hand-written SQL against prod.
+4. After every change — run the verify script (typecheck + sync checks).
+5. A mobile feature means **both platforms** (iOS + Android), not one.
+
+---
+
+## Delivery pipeline (mandatory)
+
+**All work is a sprint. No exceptions.** Even a hotfix is a mini-sprint. See [`pipeline/`](./pipeline).
+
+### Before starting
+1. Read the state doc (focus, capability index, open sprints).
+2. Identify or create the sprint file.
+3. Pull tasks from the backlog.
+4. Build → run the verify script.
+
+### The 4 phases
+- **Phase 1 — Validate the hypothesis** (before code): a board-of-directors agent panel challenges
+  non-trivial ideas. Skip only for a genuine bugfix or a sub-half-day change.
+- **Phase 2 — Plan** with the integration-safety gate (what exists nearby, least-change path, what
+  could break).
+- **Phase 3 — Implement** with layer skills auto-loaded.
+- **Phase 4 — Verify** (before showing me): verify script → typed-code review → QA → build sim.
+
+---
+
+## Trigger table: what the code touches → which reviewer is mandatory
+
+This is the heart of the enforcement. It maps a change's blast radius to the specialist that MUST
+sign off in Phase 4. A machine gate (see [`pipeline/`](./pipeline)) reads the changed files and
+**blocks the deploy** if the required verdict isn't recorded in the sprint file.
+
+| What you touched | Mandatory reviewer(s) |
+|---|---|
+| Auth / login / refresh / session / unlock / token (any layer) | `auth-flow-reviewer` |
+| Payments / billing | `money-math-invariants` + typed-code review |
+| Clinical data / patient records / medical modules | `healthcare-reviewer` + `silent-failure-hunter` |
+| iOS Swift | `swift-reviewer` + `silent-failure-hunter` |
+| Android Kotlin | `kotlin-reviewer` + `silent-failure-hunter` |
+| Background workers / queue handlers | `silent-failure-hunter` + `database-reviewer` |
+| DB schema | `database-reviewer` |
+| Anything handling secrets / hooks / config | `security-reviewer` |
+
+---
+
+## Always-on skills
+
+A short list of skills that are effectively always relevant: sprint delivery, deploy, clean-build
+verification before risky commits, money-math invariants for any billing edit, safe DB-rename recipe,
+cross-session git safety, environment preflight. See [`skills/`](./skills).
+
+---
+
+## Why this file works
+
+An AI agent is only as good as its context. `CLAUDE.md` is how you give a capable-but-forgetful
+collaborator a **spine**: consistent standards, hard "don'ts," and — most importantly — a reflex
+to route each change to the specialist that has been burned by that exact class of bug before.
+
+It turns "please remember to check auth carefully" (which fails under pressure) into "the deploy
+will not run until the auth reviewer has signed off" (which doesn't).
