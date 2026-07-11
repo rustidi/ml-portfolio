@@ -6,6 +6,13 @@ This repo explains that system. The patterns are general and you can reuse them.
 
 If you build with AI agents, the real question isn't "can it write a function." Of course it can. The question is: *how do you get reliable, reviewable, production-quality work out of it at scale — and keep it honest?* This repo is my answer.
 
+> ### 🚀 Don't just read it — run it
+> The curated, installable version of this system ships as a Claude Code plugin:
+> **[`agent-guardrails` →](https://github.com/rustidi98/agent-guardrails)**
+> `git clone` it and `./demo.sh` **blocks a hardcoded secret and a swallowed error in ~60 seconds**, then
+> passes the fix. Validated with `claude plugin validate --strict`; CI re-runs the demo on every push.
+> This repo is the *why*; that one is the *touch it yourself*.
+
 ---
 
 ## The one idea
@@ -99,4 +106,4 @@ Every example here is **sanitized and representative** — the shape and the rea
 
 For an AI-first team, this is the skill that actually matters. Not "can prompt a model" — everyone can do that now. The skill is **designing a system where AI agents produce reliable, reviewable, production work at scale, with guardrails that keep it honest.** I've been running this against a real clinical product with real users, not a demo.
 
-*— Rustem Idiatullin. Building AI products for healthcare; relocating to Australia or New Zealand.*
+*— Rustem Idiiatullin. Building AI products for healthcare; relocating to Australia or New Zealand.*

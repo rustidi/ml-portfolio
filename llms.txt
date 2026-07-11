@@ -1,0 +1,29 @@
+# How I build: an AI-orchestrated engineering system
+
+> One person runs a full production healthcare platform (iOS, Android, web, NestJS backend, GPU
+> workers) by directing AI coding agents — with a system around them: reusable skills, adversarial
+> review agents, and machine gates that block a bad deploy before it ships. This repo is the method;
+> the product's own source stays private. The runnable, installable version is the `agent-guardrails`
+> plugin.
+
+## Start here
+
+- [README](./README.md): the whole system in one page — skills, review agents, gates, memory.
+- [Runnable plugin: agent-guardrails](https://github.com/rustidi98/agent-guardrails): `git clone` and
+  `./demo.sh` blocks a hardcoded secret + a swallowed error in ~60s, then passes the fix.
+
+## The parts
+
+- [agents/](./agents): adversarial review specialists — "an agent is a scar, codified." One narrow lens
+  each (security, silent failures, auth, DB, money math), mandatory when code in its blast radius changes.
+- [skills/](./skills): ~79 codified procedures the agent loads on demand (safe DB migration, deploy,
+  build verification, LLM cost pricing, eval harness).
+- [pipeline/](./pipeline): the 4-phase delivery process, a sprint template, and the real machine
+  review-gate script.
+- [qa/](./qa): the automated browser QA loop — navigate, click, screenshot, verify the DOM before a human sees it.
+- [memory/](./memory): compounding lessons — atomic, linked, loaded every session so a bug root never recurs.
+
+## Context
+
+- [CLAUDE.md.example](./CLAUDE.md.example): the generalized "project constitution" the agent reads first.
+- Author: Rustem Idiiatullin — building clinical-conversation AI; relocating to New Zealand / Australia.
