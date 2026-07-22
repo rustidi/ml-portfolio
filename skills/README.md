@@ -16,7 +16,7 @@ Three reasons:
 2. **Hard-won detail survives.** A skill is where a costly lesson gets frozen. The deploy skill knows
    that a restart doesn't apply a rotated secret because that once cost a production incident. That
    knowledge would evaporate from a plain chat; in a skill it's permanent.
-3. **Token economy.** ~79 skills would blow the context window if all loaded at once. On-demand
+3. **Token economy.** 69 public skills would blow the context window if all loaded at once. On-demand
    loading means the agent carries only what the current task needs.
 
 ## How a skill is structured
@@ -42,7 +42,7 @@ The `description` and `triggers` are how the agent decides to load it. The body 
 
 ## The catalog (sanitized sample)
 
-The real system has ~79. A representative slice, by category:
+The current public catalogue contains 69. A representative slice, by category:
 
 **Delivery & ops**
 - `sprint-delivery` — the mandatory lifecycle: backlog → sprint → changelog → done-stamp

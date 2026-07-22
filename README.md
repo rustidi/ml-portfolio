@@ -1,6 +1,6 @@
 # How I build: an AI-orchestrated engineering system
 
-I run a full production platform on my own — iOS app, Android app, web, backend, and the GPU workers that do the heavy AI work. One person, but the output of a small team. Not because AI types fast, but because I built a system around it: a set of reusable skills, a team of review agents, and gates that stop a bad deploy before it happens.
+I lead a full production platform end to end — iOS app, Android app, web, backend, and the GPU workers that do the heavy AI work — with AI coding agents as part of the implementation method. The leverage comes from the system around them: reusable skills, specialist review agents, and gates for defined release risks.
 
 This repo explains that system. The patterns are general and you can reuse them. I use them every day on a live healthcare product. The product's own code stays private — it holds patient data, it's a commercial product, and it has live integrations. **What's public here is the method,** shown with clean, representative examples.
 
@@ -23,8 +23,8 @@ Three moving parts:
 
 | Part | What it is | Count |
 |---|---|---|
-| **Skills** | Codified procedures the agent loads on demand — how to deploy, how to migrate a DB safely, how to verify a build, how to price an LLM call | ~79 |
-| **Agents** | Adversarial specialists that review code from one narrow angle — security, silent failures, auth, mobile concurrency, DB, money math | ~29 |
+| **Skills** | Codified procedures the agent loads on demand — how to deploy, how to migrate a DB safely, how to verify a build, how to price an LLM call | 69 in this public catalogue |
+| **Agents** | Adversarial specialists that review code from one narrow angle — security, silent failures, auth, mobile concurrency, DB, money math | 26 in this public catalogue |
 | **Gates** | Shell scripts wired into deploy that **fail the deploy** (non-zero exit) unless the right specialist has signed off on the code that changed | 2 machine gates |
 
 The process isn't a suggestion I try to remember. It's enforced in the pipeline.
@@ -50,14 +50,14 @@ See [`agents/`](./agents) for the full philosophy and sanitized examples.
 
 ## The delivery pipeline
 
-Every piece of work — feature, bugfix, even a one-line hotfix — is a **sprint** with four phases. Nothing is skipped.
+The standard delivery workflow treats a feature, bugfix, or hotfix as a **sprint** with four phases.
 
 1. **Validate the hypothesis** *before* writing code. For anything non-trivial, a "board of directors" agent panel (CTO / CPO / CFO lenses) challenges the idea and returns a verdict: approved / revise / rejected.
 2. **Plan** with an *integration-safety gate*: what already exists nearby (don't rebuild it), the path of least change, and — explicitly — what the change could break in existing flows, contracts, and the DB schema.
 3. **Implement** with layer skills auto-loaded (backend, DB migrations, mobile UI, etc.).
 4. **Verify** before anything is shown to a human: typecheck, the mandatory reviewers for the touched files, a QA pass, and a clean-build simulation.
 
-Nothing is reported "done" on the model's word. **Done = verified by me** — green typecheck, production health check, a git check that the right commit actually shipped. Not a proxy.
+Nothing is reported "done" on the model's word. **Done must be backed by evidence** appropriate to the change: typecheck or tests, required reviews, production health, and confirmation that the intended commit shipped.
 
 See [`pipeline/`](./pipeline) for the phase-by-phase breakdown, a sprint-file template, and the actual machine gate.
 
@@ -65,7 +65,7 @@ See [`pipeline/`](./pipeline) for the phase-by-phase breakdown, a sprint-file te
 
 ## How a feature is checked before I ever see it
 
-The thing that makes this trustworthy isn't the writing — it's the **verification loop**. For a UI change, the agent doesn't just say "done." It drives a real browser (Playwright): navigates the flow, clicks every interactive element, fills the forms, screenshots each state, and reads back the DOM to confirm the thing actually rendered and worked. Broken states come back as findings, not as a cheerful "looks good."
+The thing that makes this trustworthy isn't the writing — it's the **verification loop**. For a UI change, the workflow can drive a real browser (Playwright): navigate the relevant flow, exercise the affected controls, capture states, and read back the DOM to confirm the intended behaviour. Broken states come back as findings, not as a cheerful "looks good."
 
 See [`qa/`](./qa) for how the automated QA loop works.
 
@@ -106,4 +106,4 @@ Every example here is **sanitized and representative** — the shape and the rea
 
 For an AI-first team, this is the skill that actually matters. Not "can prompt a model" — everyone can do that now. The skill is **designing a system where AI agents produce reliable, reviewable, production work at scale, with guardrails that keep it honest.** I've been running this against a real clinical product with real users, not a demo.
 
-*— Rustem Idiiatullin. Building AI products for healthcare; relocating to Australia or New Zealand.*
+*— Rustem Idiiatullin. Building AI products for healthcare; relocating to Auckland, New Zealand.*

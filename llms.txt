@@ -16,7 +16,7 @@
 
 - [agents/](./agents): adversarial review specialists — "an agent is a scar, codified." One narrow lens
   each (security, silent failures, auth, DB, money math), mandatory when code in its blast radius changes.
-- [skills/](./skills): ~79 codified procedures the agent loads on demand (safe DB migration, deploy,
+- [skills/](./skills): 69 public codified procedures the agent loads on demand (safe DB migration, deploy,
   build verification, LLM cost pricing, eval harness).
 - [pipeline/](./pipeline): the 4-phase delivery process, a sprint template, and the real machine
   review-gate script.
@@ -26,4 +26,4 @@
 ## Context
 
 - [CLAUDE.md.example](./CLAUDE.md.example): the generalized "project constitution" the agent reads first.
-- Author: Rustem Idiiatullin — building clinical-conversation AI; relocating to New Zealand / Australia.
+- Author: Rustem Idiiatullin — building clinical-conversation AI; relocating to Auckland, New Zealand.

@@ -5,7 +5,7 @@ is to *review* something from one narrow, adversarial angle. Security. Silent fa
 Mobile concurrency. Each is a separate sub-agent with its own system prompt, its own tools, and a
 presumption that the code is guilty until proven correct.
 
-There are ~29. This folder explains the philosophy and includes three real ones, sanitized.
+The current public catalogue contains 26. This folder explains the philosophy and includes sanitized examples.
 
 ## The design principle
 
