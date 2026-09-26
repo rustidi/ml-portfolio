@@ -8,7 +8,7 @@ If you build with AI agents, the real question isn't "can it write a function." 
 
 > ### 🚀 Don't just read it — run it
 > The curated, installable version of this system ships as a Claude Code plugin:
-> **[`agent-guardrails` →](https://github.com/rustidi98/agent-guardrails)**
+> **[`agent-guardrails` →](https://github.com/rustidi/ai-guardrails)**
 > `git clone` it and `./demo.sh` **blocks a hardcoded secret and a swallowed error in ~60 seconds**, then
 > passes the fix. Validated with `claude plugin validate --strict`; CI re-runs the demo on every push.
 > This repo is the *why*; that one is the *touch it yourself*.

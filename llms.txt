@@ -9,7 +9,7 @@
 ## Start here
 
 - [README](./README.md): the whole system in one page — skills, review agents, gates, memory.
-- [Runnable plugin: agent-guardrails](https://github.com/rustidi98/agent-guardrails): `git clone` and
+- [Runnable plugin: agent-guardrails](https://github.com/rustidi/ai-guardrails): `git clone` and
   `./demo.sh` blocks a hardcoded secret + a swallowed error in ~60s, then passes the fix.
 
 ## The parts
